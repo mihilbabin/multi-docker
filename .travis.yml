@@ -9,10 +9,10 @@ script:
   - docker run michaelbabin/react-test yarn test --coverage
 
 after_success:
-  - docker build -t michaelbabin/multi-client -f ./client
-  - docker build -t michaelbabin/multi-worker -f ./worker
-  - docker build -t michaelbabin/multi-server -f ./server
-  - docker build -t michaelbabin/multi-nginx -f ./nginx
+  - docker build -t michaelbabin/multi-client ./client
+  - docker build -t michaelbabin/multi-worker ./worker
+  - docker build -t michaelbabin/multi-server ./server
+  - docker build -t michaelbabin/multi-nginx ./nginx
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker push michaelbabin/multi-client
   - docker push michaelbabin/multi-worker
