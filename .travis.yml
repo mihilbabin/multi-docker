@@ -1,0 +1,17 @@
+sudo: required
+services:
+    - docker
+
+before_install:
+  - docker build -t michaelbabin/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run michaelbabin/react-test yarn test --coverage
+
+after_success:
+  - docker build -t michaelbabin/multi-client -f ./client
+  - docker build -t michaelbabin/multi-worker -f ./worker
+  - docker build -t michaelbabin/multi-server -f ./server
+  - docker build -t michaelbabin/multi-nginx -f ./nginx
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push michaelbabin/multi-client michaelbabin/multi-worker michaelbabin/multi-server michaelbabin/multi-nginx
