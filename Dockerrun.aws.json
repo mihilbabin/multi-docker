@@ -10,7 +10,7 @@
     },
     {
       "name": "nginx",
-      "image": "michaelbabin/multi-client",
+      "image": "michaelbabin/multi-nginx",
       "essential": true,
       "portMappings": [
         {
