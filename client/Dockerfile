@@ -2,7 +2,7 @@ FROM node:alpine as react
 
 WORKDIR /app
 
-COPY package.json .
+COPY package.json yarn.lock ./
 
 RUN yarn
 
