@@ -1,7 +1,8 @@
-version: '3.7'
+version: "3.7"
 services:
   postgres:
     image: postgres:latest
+    env_file: conf.env
   redis:
     image: redis:latest
   nginx:
@@ -10,7 +11,7 @@ services:
       dockerfile: Dockerfile.dev
       context: ./nginx
     ports:
-      - '3000:80'
+      - "3000:80"
   api:
     build:
       dockerfile: Dockerfile.dev
@@ -19,6 +20,9 @@ services:
       - /app/node_modules
       - ./server:/app
     env_file: conf.env
+    depends_on:
+      - postgres
+      - redis
   client:
     build:
       dockerfile: Dockerfile.dev
@@ -34,3 +38,5 @@ services:
       - /app/node_modules
       - ./worker:/app
     env_file: conf.env
+    depends_on:
+      - redis

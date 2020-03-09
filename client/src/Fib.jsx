@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { Component } from "react";
+import axios from "axios";
 
 class Fib extends Component {
   state = {
     seen: [],
     values: {},
-    index: ''
-  }
+    index: ""
+  };
 
   componentDidMount() {
     this.fetchValues();
@@ -14,38 +14,36 @@ class Fib extends Component {
   }
 
   async fetchValues() {
-    const values = await axios.get('/api/values/current');
+    const values = await axios.get("/api/values/current");
     this.setState({ values: values.data });
   }
 
   async fetchIndexes() {
-    const seen = await axios.get('/api/values/all');
-    this.setState({ seen : seen.data });
+    const seen = await axios.get("/api/values/all");
+    this.setState({ seen: seen.data });
   }
 
-  handleSubmit = async (event) => {
+  handleSubmit = async event => {
     event.preventDefault();
     const { index } = this.state;
-    await axios.post('/api/values', {
+    await axios.post("/api/values", {
       index
     });
-    this.setState({ index: '' });
-  }
+    this.setState({ index: "" });
+  };
 
   renderSeen() {
     const { seen } = this.state;
-    return seen.map(({ number }) => number).join(', ');
+    return seen.map(({ number }) => number).join(", ");
   }
 
   renderValues() {
     const { values } = this.state;
-    return Object
-      .entries(values)
-      .map(([key, value]) => (
-         <div key={key}>
-          For index {key} I calculated {value }
-         </div>
-      ));
+    return Object.entries(values).map(([key, value]) => (
+      <div key={key}>
+        For index {key} I calculated {value}
+      </div>
+    ));
   }
 
   render() {
@@ -66,7 +64,7 @@ class Fib extends Component {
         <h3>Calculated Values:</h3>
         {this.renderValues()}
       </div>
-    )
+    );
   }
 }
 
